@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  sophia-bot:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: sophia-bot
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - TZ=America/Sao_Paulo    
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://host.docker.internal:5000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
