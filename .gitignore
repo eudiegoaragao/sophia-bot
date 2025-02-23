@@ -172,3 +172,7 @@ cython_debug/
 # Remover exclusão de arquivos específicos
 send_sandeco.py
 message_sandeco.py
+*.log
+hello.py
+Old/
+prompt/*prompt.yaml
