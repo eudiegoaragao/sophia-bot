@@ -19,7 +19,7 @@ werkzeug_logger.setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-llm = LLMConnector.groq_deepseek_70b
+llm = LLMConnector.groq_llama3_70b
 bot = SophiaBot(llm_model=llm)
 
 @app.route("/", methods=['GET'])
@@ -32,7 +32,7 @@ def home():
 
 @app.route("/messages-upsert", methods=['POST'])
 def process_message():
-    logger.info("=" * 80)
+    logger.info("\n" + "="*80)
     logger.info("Recebendo POST em /messages-upsert")
     try:
         # Log dos headers da requisição
@@ -91,15 +91,15 @@ def process_message():
         }), 500
 
 if __name__ == '__main__':
+    print("\n" + "=" * 80)
+    print("\n Sophia Bot - Servidor Flask")
     print("=" * 80)
-    print(" Sophia Bot - Servidor Flask")
-    print("=" * 80)
-    print("Iniciando servidor...")
+    print("\n Iniciando servidor...")
     print("URL: http://localhost:5000")
     print("Debug: Ativado")
     print("Reloader: Desativado")
-    print("Pressione CTRL+C para encerrar o servidor")
-    print("=" * 80)
+    print("\n Pressione CTRL+C para encerrar o servidor")
+    print("=" * 80 + "\n")
     
     app.run(
         debug=True,
