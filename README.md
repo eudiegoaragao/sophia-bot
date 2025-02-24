@@ -47,26 +47,20 @@ Chatbot inteligente para atendimento automatizado no Whatsapp.
 ## 💻 Pré-requisitos
 
 - Python 3.8+
-- Docker e Docker Compose
-  - Instalação no Windows:
-    1. Baixe o Docker Desktop para Windows no site oficial
-    2. Siga as instruções de instalação
-    3. Reinicie o computador após a instalação
-    4. Verifique a instalação com `docker --version` e `docker-compose --version`
-- **Evolution API no Docker**
-  - Instalar a Evolution API usando Docker
-  - Configurar as credenciais e instância no `.env`
+- Docker Compose
+- Evolution API no Docker
+- Credenciais da Evolution API
 - Chave de API OpenAI
 - Credenciais da Evolution API
 - Dependências listadas em `requirements.txt`
-- Copiar os arquivos `send_sandeco.py` e `message_sandeco.py` da pasta `minha_evolution` para o projeto. Caso não possua encontra-se no grupo CrewAI 2 - Intermediário.
+- Copiar os arquivos `send_sandeco.py` e `message_sandeco.py` da pasta `minha_evolution` para o projeto. (***Caso não possua encontra-se no grupo CrewAI 2 - Intermediário.***)
  
 ## 📚 Material de Referência
 
 - Aula 04 - EvolutionAPI: Envio e Recebimento de Mensagens (Mentoria CrewAI 2 - Nível Intermediário)
 
 
-## 🚀 Tutorial de Instalação e Configuração
+## 🚀 Tutorial de Instalação e Configuração Sophia Bot
 
 ### Passo 1: Clonar o Repositório
 
@@ -75,74 +69,83 @@ git clone https://github.com/eudiegoaragao/sophia-bot.git
 cd sophia-bot
 ```
 
-### Passo 2: Configurar Variáveis de Ambiente
+### Passo 2: Criar um ambiente virtual e instalar as dependências.
 
-- Copie o arquivo `.env.example` para `.env`
-- Edite as configurações conforme necessário
-
-### Passo 3: Instalar Dependências
+- Você pode instalar as dependências localmente para facilitar as alterações posteriores no projeto.
 
 ```bash
-docker-compose build
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-### Passo 4: Iniciar o Projeto
+### Passo 3: Configurar Variáveis de Ambiente
+
+- No arquivo `docker-compose.yml`, defina as variáveis de ambiente conforme suas credenciais da Evolution API e OpenAI.
+
+### Passo 4: Instalar Dependências
+
+- O comando `docker-compose build` constrói a imagem Docker do serviço `sophia-bot` com base no Dockerfile.
 
 ```bash
-docker-compose up -d
+docker-compose build 
 ```
 
-### Passo 5: Verificar Logs
+### Passo 5: Iniciar o Projeto
 
 ```bash
-docker-compose logs -f sophia-bot
+docker-compose up -d # -d para rodar em background
 ```
 
-OU no Docker.desktop vá até o container `sophia-bot` e logs: ![Verificar Logs](/docs/images/verificar-logs.png) &nbsp; ![Flask Rodando](/docs/images/flask_rodando.png) &nbsp; 
+### Passo 6: Verificar no navegador se está funcionando
 
-## 🔧 Instalação
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/eudiegoaragao/sophia-bot.git
-   cd sophia-bot
-   ```
-
-2. Copie o arquivo `.env.example` para `.env` e preencha com suas credenciais:
-   ```bash
-   cp .env.example .env
-   ```
-   - **Importante**: No `.env`, `EVO_BASE_URL` use o IP do host, NÃO use `localhost`!
-     - O `localhost` do Docker pode causar conflitos
-     - Substitua por seu endereço IP real (ex: `192.168.1.100`)
-
-3. Instale as dependências:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## 🐳 Rodando com Docker
-
-1. **Construa e inicie os containers**
-   ```bash
-   docker-compose up -d
-   ```
-
-2. **Verificando se está funcionando**
+- Verificando se está funcionando
    - Acesse: http://localhost:5000
    - Deve retornar: 
+  
      ```json
      {
        "message": "Sophia Bot funcionando!",
        "status": "success"
      }
      ```
-   - Verifique os logs dos containers
 
-3. **Parando os serviços**
+### Passo 7: Verificar Logs
+```bash
+
+docker-compose logs -f sophia-bot
+```
+
+OU no Docker.desktop vá até o container `sophia-bot` e logs: ![Verificar Logs](/docs/images/verificar-logs.png) &nbsp; ![Flask Rodando](/docs/images/flask_rodando.png) &nbsp; 
+
+   
+Caso precise parar os serviços, use o comando abaixo:
+
    ```bash
    docker-compose down
    ```
+
+## Configuração Evolution API
+
+### Passo 8: Configurar a URL da Evolution API
+
+- Utilize no Webhook a URL:
+
+```bash 
+http://sophia-bot:5000/
+```
+![EVO_URL](/docs/images/evo_url.png) &nbsp;
+```
+
+
+### Passo 10: No terminal teste a comunicação entre os contêineres   
+
+```bash
+docker exec -it sophia-bot curl http://evolution_api:8081 # Testa a comunicação entre a Evo e a Sophia.
+```
+[testar comunicacao](/docs/images/testar-comunicacao.png) &nbsp;
+
+
 
 ## 🤖 Configuração do Prompt do Sistema
 
@@ -160,11 +163,20 @@ No arquivo `sophia_prompt.py`, substitua o texto `DIGITE SEU PROMPT AQUI` por um
 - Defina o tom e o estilo de comunicação
 - Considere o contexto e propósito do chatbot
 
-## 🎯 Como Usar
+## Teste no Whatsapp
 
-1. Configure as variáveis de ambiente no arquivo `.env`
-2. Inicie o chatbot
-3. Interaja via WhatsApp usando o número configurado
+- Envie uma mensagem no whatsapp para a instancia configurada no arquivo `docker-compose.yml`
+
+- Verifique se a resposta foi gerada pelo bot
+
+
+## 🧐 Testes
+
+## ⚠️ **ATENÇÃO!!!!**
+
+- **Caso não receba a resposta, verifique os logs do contêiner `sophia-bot` e da `evolution_api`.**
+- **Caso a `evolution_api` não esteja respondendo, verifique as credenciais no arquivo `docker-compose.yml`.**
+- **Faça um teste usando a URL do `webhook.site` na `evolution_api`.**
 
 ## 👥 Contribuição
 
