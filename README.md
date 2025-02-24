@@ -46,14 +46,12 @@ Chatbot inteligente para atendimento automatizado no Whatsapp.
 
 ## 💻 Pré-requisitos
 
-- Python 3.8+
 - Docker Compose
 - Evolution API no Docker
 - Credenciais da Evolution API
 - Chave de API OpenAI
 - Credenciais da Evolution API
-- Dependências listadas em `requirements.txt`
-- Copiar os arquivos `send_sandeco.py` e `message_sandeco.py` da pasta `minha_evolution` para o projeto. (***Caso não possua encontra-se no grupo CrewAI 2 - Intermediário.***)
+
  
 ## 📚 Material de Referência
 
@@ -68,22 +66,38 @@ Chatbot inteligente para atendimento automatizado no Whatsapp.
 git clone https://github.com/eudiegoaragao/sophia-bot.git
 cd sophia-bot
 ```
+### Passo 2: 
 
-### Passo 2: Criar um ambiente virtual e instalar as dependências.
+- Copiar os arquivos `send_sandeco.py` e `message_sandeco.py` da pasta `minha_evolution` para o projeto. 
+
+- (***Caso não possua encontra-se no grupo CrewAI 2 - Intermediário.***)
+
+### Passo 3: Criar um ambiente virtual e instalar as dependências.
 
 - Você pode instalar as dependências localmente para facilitar as alterações posteriores no projeto.
 
+- Crie o ambiente virtual
+
 ```bash
 python -m venv venv
-source venv/bin/activate
+```
+- Ative o ambiente virtual
+
+```bash
+./venv/Scripts/activate
+```
+
+- Instale as dependências
+
+```bash
 pip install -r requirements.txt
 ```
 
-### Passo 3: Configurar Variáveis de Ambiente
+### Passo 4: Configurar Variáveis de Ambiente
 
 - No arquivo `docker-compose.yml`, defina as variáveis de ambiente conforme suas credenciais da Evolution API e OpenAI.
 
-### Passo 4: Instalar Dependências
+### Passo 5: Instalar Dependências
 
 - O comando `docker-compose build` constrói a imagem Docker do serviço `sophia-bot` com base no Dockerfile.
 
@@ -91,13 +105,13 @@ pip install -r requirements.txt
 docker-compose build 
 ```
 
-### Passo 5: Iniciar o Projeto
+### Passo 6: Iniciar o Projeto
 
 ```bash
-docker-compose up -d # -d para rodar em background
+docker-compose up -d 
 ```
 
-### Passo 6: Verificar no navegador se está funcionando
+### Passo 7: Verificar no navegador se está funcionando
 
 - Verificando se está funcionando
    - Acesse: http://localhost:5000
@@ -110,7 +124,7 @@ docker-compose up -d # -d para rodar em background
      }
      ```
 
-### Passo 7: Verificar Logs
+### Passo 8: Verificar Logs
 ```bash
 
 docker-compose logs -f sophia-bot
@@ -127,22 +141,24 @@ Caso precise parar os serviços, use o comando abaixo:
 
 ## Configuração Evolution API
 
-### Passo 8: Configurar a URL da Evolution API
+### Passo 9: Configurar a URL da Evolution API
 
 - Utilize no Webhook a URL:
 
 ```bash 
 http://sophia-bot:5000/
 ```
-![EVO_URL](/docs/images/evo_url.png) &nbsp;
-```
+![evo_url](/docs/images/evo_url.png) &nbsp;
 
+ 
 
 ### Passo 10: No terminal teste a comunicação entre os contêineres   
 
 ```bash
-docker exec -it sophia-bot curl http://evolution_api:8081 # Testa a comunicação entre a Evo e a Sophia.
+docker exec -it sophia-bot curl http://evolution_api:8081 
 ```
+- Testa a comunicação entre a Evo e a Sophia.
+
 [testar comunicacao](/docs/images/testar-comunicacao.png) &nbsp;
 
 
